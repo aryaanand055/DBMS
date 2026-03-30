@@ -3,15 +3,35 @@ import functools
 from datetime import datetime
 import pymysql
 import pymysql.cursors
+from dotenv import load_dotenv
 from flask import (Flask, render_template, request, redirect,
                    url_for, session, flash, g)
 from werkzeug.security import generate_password_hash, check_password_hash
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-prod")
 
+
+def parse_db_host(value):
+    if not value:
+        return "localhost", 3306
+    if ":" in value:
+        host, port = value.rsplit(":", 1)
+        try:
+            return host, int(port)
+        except ValueError:
+            return value, 3306
+    return value, 3306
+
+
+db_host, db_port = parse_db_host(os.environ.get("DB_HOST", "localhost"))
+
 DB_CONFIG = {
-    "host": os.environ.get("DB_HOST", "localhost"),
+    "host": db_host,
+    "port": db_port,
     "user": os.environ.get("DB_USER", "root"),
     "password": os.environ.get("DB_PASSWORD", ""),
     "db": os.environ.get("DB_NAME", "food_donation_db"),
