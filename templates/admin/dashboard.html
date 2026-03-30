@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard - FoodShare{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4"><i class="fa fa-shield-halved me-2 text-danger"></i>Admin Dashboard</h3>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card card-hover border-0 shadow-sm text-center p-3">
+            <i class="fa fa-users fa-2x text-primary mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ total_users }}</h4>
+            <small class="text-muted">Total Users</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card card-hover border-0 shadow-sm text-center p-3">
+            <i class="fa fa-box-open fa-2x text-warning mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ total_donations }}</h4>
+            <small class="text-muted">Total Donations</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card card-hover border-0 shadow-sm text-center p-3">
+            <i class="fa fa-hourglass-half fa-2x text-secondary mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ pending_donations }}</h4>
+            <small class="text-muted">Pending</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card card-hover border-0 shadow-sm text-center p-3">
+            <i class="fa fa-circle-check fa-2x text-success mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ delivered_donations }}</h4>
+            <small class="text-muted">Delivered</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-semibold">Recent Donations</div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr><th>Food Type</th><th>Donor</th><th>Location</th><th>Status</th><th>Date</th></tr>
+                        </thead>
+                        <tbody>
+                        {% for d in recent %}
+                        <tr>
+                            <td>{{ d.food_type }}</td>
+                            <td>{{ d.donor_name }}</td>
+                            <td>{{ d.location }}</td>
+                            <td><span class="badge badge-{{ d.status }}">{{ d.status.replace('_',' ').title() }}</span></td>
+                            <td>{{ d.created_at.strftime('%d %b %Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-semibold">Quick Links</div>
+            <div class="list-group list-group-flush">
+                <a href="{{ url_for('admin_users') }}" class="list-group-item list-group-item-action">
+                    <i class="fa fa-users me-2 text-primary"></i>Manage Users
+                </a>
+                <a href="{{ url_for('admin_reports') }}" class="list-group-item list-group-item-action">
+                    <i class="fa fa-chart-bar me-2 text-success"></i>View Reports
+                </a>
+                <a href="{{ url_for('feedback') }}" class="list-group-item list-group-item-action">
+                    <i class="fa fa-star me-2 text-warning"></i>View Feedback
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

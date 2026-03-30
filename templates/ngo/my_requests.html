@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}My Requests - FoodShare{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0"><i class="fa fa-list me-2 text-primary"></i>My Claimed Donations</h3>
+    <a href="{{ url_for('ngo_dashboard') }}" class="btn btn-outline-primary"><i class="fa fa-arrow-left me-1"></i>Back</a>
+</div>
+
+{% if rows %}
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Food Type</th>
+                        <th>Qty</th>
+                        <th>Location</th>
+                        <th>Donor</th>
+                        <th>Expiry</th>
+                        <th>Donation Status</th>
+                        <th>Delivery Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for r in rows %}
+                <tr>
+                    <td class="fw-semibold">{{ r.food_type }}</td>
+                    <td>{{ r.quantity }}</td>
+                    <td>{{ r.location }}</td>
+                    <td>{{ r.donor_name }}</td>
+                    <td>{{ r.expiry_time.strftime('%d %b %Y') if r.expiry_time else '-' }}</td>
+                    <td><span class="badge badge-{{ r.donation_status }}">{{ r.donation_status.replace('_',' ').title() }}</span></td>
+                    <td>
+                        {% if r.delivery_status %}
+                        <span class="badge badge-{{ r.delivery_status }}">{{ r.delivery_status.replace('_',' ').title() }}</span>
+                        {% if r.delivery_time %}<br><small class="text-muted">{{ r.delivery_time.strftime('%d %b %Y') }}</small>{% endif %}
+                        {% else %}-{% endif %}
+                    </td>
+                    <td>
+                        {% if r.delivery_id and r.delivery_status != 'delivered' %}
+                        <form method="post" action="{{ url_for('ngo_update_delivery', delivery_id=r.delivery_id) }}" class="d-flex gap-1">
+                            <select name="delivery_status" class="form-select form-select-sm" style="width:130px;">
+                                <option value="pending" {% if r.delivery_status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="in_transit" {% if r.delivery_status == 'in_transit' %}selected{% endif %}>In Transit</option>
+                                <option value="delivered">Delivered</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-success">Update</button>
+                        </form>
+                        {% elif r.delivery_status == 'delivered' %}
+                        <span class="text-success small"><i class="fa fa-check me-1"></i>Done</span>
+                        {% else %}-{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info"><i class="fa fa-circle-info me-2"></i>No claimed donations yet. <a href="{{ url_for('ngo_dashboard') }}">Browse available donations.</a></div>
+{% endif %}
+{% endblock %}
