@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %}FoodShare - Fighting Hunger Together{% endblock %}
+{% block content %}
+<!-- Hero -->
+<div class="hero-section rounded-4 text-white text-center px-4 py-5 mb-5" style="margin: -1.5rem -12px 2rem;">
+    <div class="container py-4">
+        <h1 class="display-3 fw-bold mb-3">Fighting Hunger Together</h1>
+        <p class="lead mb-4 opacity-90">Connect food donors with NGOs and receivers. Reduce waste. Feed communities.</p>
+        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-3 fw-semibold">
+            <i class="fa fa-rocket me-2"></i>Get Started
+        </a>
+        <a href="#how-it-works" class="btn btn-outline-light btn-lg">
+            <i class="fa fa-circle-info me-2"></i>Learn More
+        </a>
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="row g-4 mb-5">
+    <div class="col-6 col-md-3">
+        <div class="card card-hover text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <i class="fa fa-box-open fa-2x text-warning mb-2"></i>
+                <h2 class="fw-bold mb-0">{{ stats.total }}</h2>
+                <p class="text-muted small mb-0">Total Donations</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card card-hover text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <i class="fa fa-circle-check fa-2x text-success mb-2"></i>
+                <h2 class="fw-bold mb-0">{{ stats.delivered }}</h2>
+                <p class="text-muted small mb-0">Delivered</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card card-hover text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <i class="fa fa-users fa-2x text-primary mb-2"></i>
+                <h2 class="fw-bold mb-0">{{ stats.active_users }}</h2>
+                <p class="text-muted small mb-0">Active Users</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card card-hover text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <i class="fa fa-building-ngo fa-2x text-danger mb-2"></i>
+                <h2 class="fw-bold mb-0">{{ stats.ngo_count }}</h2>
+                <p class="text-muted small mb-0">NGO Partners</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How it works -->
+<div id="how-it-works" class="mb-5">
+    <h2 class="text-center fw-bold mb-4">How It Works</h2>
+    <div class="row g-4">
+        <div class="col-md-4 text-center">
+            <div class="card card-hover border-0 shadow-sm h-100 p-4">
+                <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
+                    <i class="fa fa-hand-holding-heart fa-2x text-warning"></i>
+                </div>
+                <h5 class="fw-bold">1. Donate</h5>
+                <p class="text-muted">Donors list surplus food with details like type, quantity, location and expiry time.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card card-hover border-0 shadow-sm h-100 p-4">
+                <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
+                    <i class="fa fa-handshake fa-2x text-primary"></i>
+                </div>
+                <h5 class="fw-bold">2. Connect</h5>
+                <p class="text-muted">NGOs and receivers browse available donations and claim what they need.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card card-hover border-0 shadow-sm h-100 p-4">
+                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
+                    <i class="fa fa-truck fa-2x text-success"></i>
+                </div>
+                <h5 class="fw-bold">3. Deliver</h5>
+                <p class="text-muted">NGOs coordinate pickup and delivery, updating status as food reaches recipients.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Join as -->
+<h2 class="text-center fw-bold mb-4">Join As</h2>
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card card-hover border-0 shadow-sm h-100 text-center p-4">
+            <i class="fa fa-person fa-3x text-warning mb-3"></i>
+            <h5 class="fw-bold">Donor</h5>
+            <p class="text-muted">Have surplus food? List it and help someone in need.</p>
+            <a href="{{ url_for('register') }}" class="btn btn-warning mt-auto">Register as Donor</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-hover border-0 shadow-sm h-100 text-center p-4">
+            <i class="fa fa-people-group fa-3x text-primary mb-3"></i>
+            <h5 class="fw-bold">NGO / Volunteer</h5>
+            <p class="text-muted">Bridge the gap between donors and those who need food.</p>
+            <a href="{{ url_for('register') }}" class="btn btn-primary mt-auto">Register as NGO</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-hover border-0 shadow-sm h-100 text-center p-4">
+            <i class="fa fa-user-group fa-3x text-success mb-3"></i>
+            <h5 class="fw-bold">Receiver</h5>
+            <p class="text-muted">Looking for food assistance? Find available donations near you.</p>
+            <a href="{{ url_for('register') }}" class="btn btn-success mt-auto">Register as Receiver</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

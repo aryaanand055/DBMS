@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Add Donation - FoodShare{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-semibold"><i class="fa fa-plus text-warning me-2"></i>Add New Donation</div>
+            <div class="card-body p-4">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Food Type <span class="text-danger">*</span></label>
+                        <input type="text" name="food_type" class="form-control" placeholder="e.g. Rice, Bread, Vegetables" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Quantity <span class="text-danger">*</span></label>
+                        <input type="text" name="quantity" class="form-control" placeholder="e.g. 10 kg, 50 pieces" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Pickup Location <span class="text-danger">*</span></label>
+                        <input type="text" name="location" class="form-control" placeholder="Full address for pickup" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Expiry Date &amp; Time <span class="text-danger">*</span></label>
+                        <input type="datetime-local" name="expiry_time" class="form-control" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Description (optional)</label>
+                        <textarea name="description" class="form-control" rows="3" placeholder="Any additional details about the food..."></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning fw-semibold flex-fill">Submit Donation</button>
+                        <a href="{{ url_for('donor_dashboard') }}" class="btn btn-outline-secondary flex-fill">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

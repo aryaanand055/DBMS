@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Receiver Dashboard - FoodShare{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4"><i class="fa fa-hand-holding me-2 text-success"></i>Receiver Dashboard</h3>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white fw-semibold">Available Donations</div>
+    <div class="card-body p-0">
+        {% if available %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr><th>Food Type</th><th>Quantity</th><th>Location</th><th>Donor</th><th>Expiry</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                {% for d in available %}
+                <tr>
+                    <td class="fw-semibold">{{ d.food_type }}</td>
+                    <td>{{ d.quantity }}</td>
+                    <td>{{ d.location }}</td>
+                    <td>{{ d.donor_name }}</td>
+                    <td>{{ d.expiry_time.strftime('%d %b %Y %H:%M') if d.expiry_time else '-' }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('receiver_request', donation_id=d.donation_id) }}" onsubmit="return confirm('Request this donation?')">
+                            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-hand-holding me-1"></i>Request</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="p-4 text-center text-muted">No available donations at the moment.</div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-semibold">My Requests</div>
+    <div class="card-body p-0">
+        {% if my_requests %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr><th>Food Type</th><th>Quantity</th><th>Location</th><th>Donor</th><th>Request Status</th><th>Delivery Status</th></tr>
+                </thead>
+                <tbody>
+                {% for r in my_requests %}
+                <tr>
+                    <td class="fw-semibold">{{ r.food_type }}</td>
+                    <td>{{ r.quantity }}</td>
+                    <td>{{ r.location }}</td>
+                    <td>{{ r.donor_name }}</td>
+                    <td><span class="badge badge-{{ r.request_status }}">{{ r.request_status.title() }}</span></td>
+                    <td>
+                        {% if r.delivery_status %}
+                        <span class="badge badge-{{ r.delivery_status }}">{{ r.delivery_status.replace('_',' ').title() }}</span>
+                        {% else %}-{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="p-4 text-center text-muted">No requests yet.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

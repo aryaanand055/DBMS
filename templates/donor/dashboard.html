@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Donor Dashboard - FoodShare{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0"><i class="fa fa-gauge me-2 text-warning"></i>Donor Dashboard</h3>
+    <a href="{{ url_for('donor_add') }}" class="btn btn-warning"><i class="fa fa-plus me-1"></i>Add Donation</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <i class="fa fa-box-open fa-2x text-secondary mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ total }}</h4>
+            <small class="text-muted">Total</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <i class="fa fa-hourglass-half fa-2x text-warning mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ pending }}</h4>
+            <small class="text-muted">Pending</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <i class="fa fa-truck fa-2x text-primary mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ active }}</h4>
+            <small class="text-muted">Accepted/Transit</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <i class="fa fa-circle-check fa-2x text-success mb-2"></i>
+            <h4 class="fw-bold mb-0">{{ delivered }}</h4>
+            <small class="text-muted">Delivered</small>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-semibold">My Donations</div>
+    <div class="card-body p-0">
+        {% if donations %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Food Type</th>
+                        <th>Quantity</th>
+                        <th>Location</th>
+                        <th>Expiry</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for d in donations %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ d.food_type }}</td>
+                    <td>{{ d.quantity }}</td>
+                    <td>{{ d.location }}</td>
+                    <td>{{ d.expiry_time.strftime('%d %b %Y %H:%M') if d.expiry_time else '-' }}</td>
+                    <td>
+                        <span class="badge badge-{{ d.status }}">{{ d.status.replace('_',' ').title() }}</span>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('donor_edit', donation_id=d.donation_id) }}" class="btn btn-sm btn-outline-primary me-1"><i class="fa fa-edit"></i></a>
+                        {% if d.status == 'pending' %}
+                        <form method="post" action="{{ url_for('donor_delete', donation_id=d.donation_id) }}" class="d-inline" onsubmit="return confirm('Delete this donation?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="p-4 text-center text-muted">No donations yet. <a href="{{ url_for('donor_add') }}">Add your first donation!</a></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
