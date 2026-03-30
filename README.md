@@ -102,16 +102,12 @@ pip install -r requirements.txt
 
 ### 3. Set up the database
 ```bash
-mysql -u root -p < schema.sql
+run the file schema.sql in qorkbench
 ```
 
 ### 4. Configure environment variables (optional)
 ```bash
-export DB_HOST=localhost
-export DB_USER=root
-export DB_PASSWORD=your_password
-export DB_NAME=food_donation_db
-export SECRET_KEY=your-secret-key
+rename the example.env to .env
 ```
 
 ### 5. Run the application
