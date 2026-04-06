@@ -726,3 +726,81 @@ hr { border-color: var(--line) !important; }
     .cta-parallax-section { padding: 5rem 0; }
     blockquote.hero-quote::before { font-size: 4rem; vertical-align: -1.2rem; }
 }
+.footer-copy {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.8;
+    position: relative;
+}
+
+/* Brand styling */
+.footer-copy .brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+/* Tagline subtle glow */
+.footer-copy .tagline {
+    color: #aaa;
+    font-style: italic;
+    margin-left: 6px;
+}
+
+/* Team section */
+.footer-copy .team {
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* Names */
+.footer-copy .member {
+    font-weight: 500;
+    color: #ddd;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect on names */
+.footer-copy .member:hover {
+    color: #fff;
+    transform: translateY(-2px) scale(1.05);
+    text-shadow: 0 0 8px rgba(255,255,255,0.4);
+}
+
+/* Cool underline animation */
+.footer-copy .member::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, #ff7a18, #ffb347);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.footer-copy .member:hover::after {
+    width: 100%;
+}
+
+/* Dots between names */
+.footer-copy .dot {
+    margin: 0 6px;
+    color: #666;
+}
+
+/* Heart animation */
+.heart-icon {
+    color: var(--warm);
+    margin-left: 6px;
+    transition: transform 0.3s ease;
+}
+
+/* Subtle pulse */
+.heart-icon:hover {
+    transform: scale(1.3);
+}
