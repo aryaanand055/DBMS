@@ -317,8 +317,12 @@ def ngo_dashboard():
         FROM Food_Donations fd
         JOIN Users u ON fd.donor_id = u.user_id
         WHERE fd.status IN ('pending', 'requested')
+          AND fd.donation_id NOT IN (
+              SELECT donation_id FROM Requests WHERE ngo_id = %s
+          )
         ORDER BY fd.created_at DESC
         """,
+        (ngo_id,),
     )
     return render_template("ngo/dashboard.html", donations=donations)
 
