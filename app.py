@@ -119,15 +119,27 @@ def index():
         delivered = query("SELECT COUNT(*) AS c FROM Food_Donations WHERE status='delivered'", one=True)["c"]
         active_users = query("SELECT COUNT(*) AS c FROM Users WHERE is_active=1", one=True)["c"]
         ngo_count = query("SELECT COUNT(*) AS c FROM Users WHERE role='ngo' AND is_active=1", one=True)["c"]
+        recent_feedback = query(
+            """
+            SELECT f.rating, f.comments, f.created_at,
+                   u.name AS reviewer_name, fd.food_type
+            FROM Feedback f
+            JOIN Users u ON f.user_id = u.user_id
+            JOIN Food_Donations fd ON f.donation_id = fd.donation_id
+            WHERE f.rating >= 4 AND f.comments IS NOT NULL AND f.comments != ''
+            ORDER BY f.created_at DESC LIMIT 6
+            """
+        )
     except Exception:
         total = delivered = active_users = ngo_count = 0
+        recent_feedback = []
     stats = {
         "total": total,
         "delivered": delivered,
         "active_users": active_users,
         "ngo_count": ngo_count,
     }
-    return render_template("index.html", stats=stats)
+    return render_template("index.html", stats=stats, recent_feedback=recent_feedback)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -304,13 +316,9 @@ def ngo_dashboard():
         SELECT fd.*, u.name AS donor_name
         FROM Food_Donations fd
         JOIN Users u ON fd.donor_id = u.user_id
-        WHERE fd.status = 'pending'
-          AND fd.donation_id NOT IN (
-              SELECT donation_id FROM Requests WHERE ngo_id = %s
-          )
+        WHERE fd.status IN ('pending', 'requested')
         ORDER BY fd.created_at DESC
         """,
-        (ngo_id,),
     )
     return render_template("ngo/dashboard.html", donations=donations)
 
@@ -320,7 +328,7 @@ def ngo_dashboard():
 def ngo_claim(donation_id):
     ngo_id = session["user_id"]
     donation = query(
-        "SELECT * FROM Food_Donations WHERE donation_id=%s AND status='pending'",
+        "SELECT * FROM Food_Donations WHERE donation_id=%s AND status IN ('pending', 'requested')",
         (donation_id,),
         one=True,
     )
@@ -561,19 +569,15 @@ def receiver_request(donation_id):
         flash("You have already requested this donation.", "warning")
         return redirect(url_for("receiver_dashboard"))
 
-    request_id = execute(
-        "INSERT INTO Requests (donation_id, ngo_id, request_status) VALUES (%s, %s, 'accepted')",
+    execute(
+        "INSERT INTO Requests (donation_id, ngo_id, request_status) VALUES (%s, %s, 'pending')",
         (donation_id, receiver_id),
     )
     execute(
-        "INSERT INTO Delivery (request_id, delivery_status) VALUES (%s, 'pending')",
-        (request_id,),
-    )
-    execute(
-        "UPDATE Food_Donations SET status='accepted' WHERE donation_id=%s",
+        "UPDATE Food_Donations SET status='requested' WHERE donation_id=%s",
         (donation_id,),
     )
-    flash("Request submitted successfully!", "success")
+    flash("Request submitted successfully! An NGO will pick it up for delivery.", "success")
     return redirect(url_for("receiver_dashboard"))
 
 

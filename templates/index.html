@@ -280,6 +280,49 @@
 </section>
 
 <!-- ══════════════════════════════════════════════
+     COMMUNITY FEEDBACK — TESTIMONIALS
+══════════════════════════════════════════════ -->
+{% if recent_feedback %}
+<section class="section" style="background:var(--bg-2);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-eyebrow">Real Stories</span>
+            <h2 class="section-title">What Our <em>Community</em> Says</h2>
+            <p class="section-desc mx-auto">Every piece of feedback is a story of food reaching someone who needed it. Here's what our community has to say.</p>
+        </div>
+        <div class="row g-4">
+            {% for f in recent_feedback %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                <div class="card border-0 h-100 p-4" style="background:var(--bg-card);border-radius:var(--r-lg);">
+                    <div class="mb-3">
+                        {% for i in range(1, 6) %}
+                        <i class="fa fa-star" style="font-size:.9rem;color:{% if i <= f.rating %}#d4a84a{% else %}rgba(255,255,255,.15){% endif %};"></i>
+                        {% endfor %}
+                    </div>
+                    <p style="color:var(--text-dim);font-size:.95rem;line-height:1.7;flex:1;" class="mb-3">"{{ f.comments }}"</p>
+                    <div class="d-flex align-items-center gap-2 mt-auto">
+                        <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i class="fa fa-user" style="font-size:.8rem;color:var(--accent-l);"></i>
+                        </div>
+                        <div>
+                            <div style="font-size:.88rem;font-weight:600;color:var(--text);">{{ f.reviewer_name }}</div>
+                            <div style="font-size:.78rem;color:var(--text-muted);">on {{ f.food_type }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{{ url_for('feedback') }}" class="btn-hero-ghost">
+                <i class="fa fa-star me-2"></i>Share Your Experience
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════════════════════════════════
      CTA PARALLAX SECTION
 ══════════════════════════════════════════════ -->
 <section class="cta-parallax-section" id="ctaSection">
