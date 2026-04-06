@@ -27,8 +27,8 @@ def parse_db_host(value):
     return value, 3306
 
 
-db_host, db_port = parse_db_host(os.environ.get("DB_HOST", "localhost"))
-
+db_host = os.environ.get("DB_HOST", "localhost")
+db_port = int(os.environ.get("DB_PORT", 3306))
 DB_CONFIG = {
     "host": db_host,
     "port": db_port,
