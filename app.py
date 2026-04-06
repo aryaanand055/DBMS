@@ -359,7 +359,7 @@ def ngo_requests():
     ngo_id = session["user_id"]
     rows = query(
         """
-        SELECT r.request_id, r.created_at AS request_date,
+        SELECT r.request_id, r.created_at AS request_date, r.delivery_address,
                fd.food_type, fd.quantity, fd.location, fd.expiry_time, fd.status AS donation_status,
                u.name AS donor_name,
                d.delivery_id, d.delivery_status, d.delivery_time
@@ -523,7 +523,7 @@ def receiver_dashboard():
     )
     my_requests = query(
         """
-        SELECT r.request_id, r.request_status, r.created_at,
+        SELECT r.request_id, r.request_status, r.created_at, r.delivery_address,
                fd.food_type, fd.quantity, fd.location, fd.status AS donation_status,
                u.name AS donor_name,
                d.delivery_status
@@ -543,6 +543,11 @@ def receiver_dashboard():
 @role_required("receiver")
 def receiver_request(donation_id):
     receiver_id = session["user_id"]
+    delivery_address = request.form.get("delivery_address", "").strip()
+    if not delivery_address:
+        flash("Please provide a delivery address.", "danger")
+        return redirect(url_for("receiver_dashboard"))
+
     donation = query(
         "SELECT * FROM Food_Donations WHERE donation_id=%s AND status='pending'",
         (donation_id,),
@@ -562,8 +567,8 @@ def receiver_request(donation_id):
         return redirect(url_for("receiver_dashboard"))
 
     request_id = execute(
-        "INSERT INTO Requests (donation_id, ngo_id, request_status) VALUES (%s, %s, 'accepted')",
-        (donation_id, receiver_id),
+        "INSERT INTO Requests (donation_id, ngo_id, delivery_address, request_status) VALUES (%s, %s, %s, 'accepted')",
+        (donation_id, receiver_id, delivery_address),
     )
     execute(
         "INSERT INTO Delivery (request_id, delivery_status) VALUES (%s, 'pending')",
