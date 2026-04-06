@@ -1,30 +1,33 @@
 {% extends 'base.html' %}
-{% block title %}Login - FoodShare{% endblock %}
+{% block title %}Sign In — FoodShare{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-5 col-lg-4">
-        <div class="card auth-card shadow border-0 mt-4">
-            <div class="card-body p-4 p-lg-5">
-                <div class="text-center mb-4">
-                    <div class="auth-icon mb-3"><i class="fa fa-sign-in-alt"></i></div>
-                    <h4 class="fw-bold mb-2">Welcome back</h4>
-                    <p class="text-muted mb-0 small">Log in to manage donations, requests, and feedback.</p>
-                </div>
-                <form method="post">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Email</label>
-                        <input type="email" name="email" class="form-control" required autofocus>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input type="password" name="password" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-accent w-100 fw-semibold">Login</button>
-                </form>
-                <hr>
-                <p class="text-center mb-0 small">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
-            </div>
+<div class="auth-page">
+    <div class="auth-bg"></div>
+    <div class="auth-overlay"></div>
+    <div class="auth-card p-4 p-lg-5">
+        <div class="text-center mb-4">
+            <div class="auth-icon mb-3"><i class="fa fa-sign-in-alt"></i></div>
+            <h4 class="auth-title mb-1">Welcome back</h4>
+            <p class="auth-subtitle mb-0">Sign in to continue your mission against hunger.</p>
         </div>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="your@email.com" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-accent w-100 fw-semibold py-2">
+                <i class="fa fa-sign-in-alt me-2"></i>Sign In
+            </button>
+        </form>
+        <hr class="auth-divider">
+        <p class="text-center mb-0 small" style="color:var(--text-dim);">
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Join the mission</a>
+        </p>
     </div>
 </div>
 {% endblock %}
