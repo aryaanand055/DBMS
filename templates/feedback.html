@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Feedback - FoodShare{% endblock %}
 {% block content %}
-<h3 class="fw-bold mb-4"><i class="fa fa-star me-2 text-warning"></i>Feedback</h3>
+<div class="page-heading mb-4">
+    <h3 class="fw-bold mb-1"><i class="fa fa-star me-2 text-warning"></i>Feedback</h3>
+    <p class="text-muted mb-0">Rate completed donations and share what worked well.</p>
+</div>
 
 <div class="row g-4">
     <div class="col-md-5">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white fw-semibold">Submit Feedbacks</div>
+        <div class="card card-surface border-0 shadow-sm">
+            <div class="card-header bg-white fw-semibold">Submit Feedback</div>
             <div class="card-body p-4">
                 <form method="post">
                     <div class="mb-3">
@@ -38,19 +41,19 @@
                         <label class="form-label fw-semibold">Comments (optional)</label>
                         <textarea name="comments" class="form-control" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-semibold">Submit Feedback</button>
+                    <button type="submit" class="btn btn-accent w-100 fw-semibold">Submit Feedback</button>
                 </form>
             </div>
         </div>
     </div>
 
     <div class="col-md-7">
-        <div class="card border-0 shadow-sm">
+        <div class="card card-surface border-0 shadow-sm">
             <div class="card-header bg-white fw-semibold">Recent Feedback</div>
             <div class="card-body">
                 {% if existing_feedback %}
                 {% for f in existing_feedback %}
-                <div class="border-bottom pb-3 mb-3">
+                <div class="feedback-item border-bottom pb-3 mb-3">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
                             <span class="fw-semibold">{{ f.reviewer_name }}</span>

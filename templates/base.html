@@ -8,10 +8,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<body class="site-body">
+<div class="page-glow page-glow-one"></div>
+<div class="page-glow page-glow-two"></div>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">🍲 FoodShare</a>
+        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+            <span class="brand-mark"><i class="fa fa-bowl-food"></i></span>
+            <span>FoodShare</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,20 +39,20 @@
                     {% endif %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('feedback') }}"><i class="fa fa-star me-1"></i>Feedback</a></li>
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">
+                        <a class="btn btn-ghost btn-sm" href="{{ url_for('logout') }}">
                             <i class="fa fa-right-from-bracket me-1"></i>Logout ({{ current_user.name }})
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-sign-in-alt me-1"></i>Login</a></li>
-                    <li class="nav-item ms-lg-2"><a class="btn btn-warning btn-sm" href="{{ url_for('register') }}"><i class="fa fa-user-plus me-1"></i>Register</a></li>
+                    <li class="nav-item ms-lg-2"><a class="btn btn-accent btn-sm" href="{{ url_for('register') }}"><i class="fa fa-user-plus me-1"></i>Register</a></li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container my-4">
+<main class="container site-main py-4 py-lg-5">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -58,11 +64,12 @@
         {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
-</div>
+</main>
 
-<footer class="bg-dark text-light py-4 mt-5">
+<footer class="site-footer mt-auto">
     <div class="container text-center">
-        <p class="mb-0"><i class="fa fa-heart text-danger me-1"></i>FoodShare &copy; 2024 - Fighting Hunger Together</p>
+        <p class="mb-1 fw-semibold">FoodShare &copy; 2026</p>
+        <p class="mb-0 small text-white-50">Arun Madav, Arunthathi, Arya, Harini - fighting hunger together <i class="fa fa-heart text-danger ms-1"></i></p>
     </div>
 </footer>
 

@@ -2,23 +2,43 @@
 {% block title %}FoodShare - Fighting Hunger Together{% endblock %}
 {% block content %}
 <!-- Hero -->
-<div class="hero-section rounded-4 text-white text-center px-4 py-5 mb-5" style="margin: -1.5rem -12px 2rem;">
-    <div class="container py-4">
-        <h1 class="display-3 fw-bold mb-3">Fighting Hunger Together</h1>
-        <p class="lead mb-4 opacity-90">Connect food donors with NGOs and receivers. Reduce waste. Feed communities.</p>
-        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-3 fw-semibold">
-            <i class="fa fa-rocket me-2"></i>Get Started
-        </a>
-        <a href="#how-it-works" class="btn btn-outline-light btn-lg">
-            <i class="fa fa-circle-info me-2"></i>Learn More
-        </a>
+<section class="hero-section mb-5">
+    <div class="hero-orb hero-orb-one"></div>
+    <div class="hero-orb hero-orb-two"></div>
+    <div class="container hero-content py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 text-center text-lg-start text-white">
+                <div class="hero-pill mb-3">Food rescue made simple</div>
+                <h1 class="display-3 fw-bold mb-3">Fighting Hunger Together</h1>
+                <p class="lead mb-4 hero-copy">Connect food donors with NGOs and receivers. Reduce waste. Feed communities.</p>
+                <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
+                    <a href="{{ url_for('register') }}" class="btn btn-light btn-lg fw-semibold">
+                        <i class="fa fa-rocket me-2"></i>Get Started
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline-light btn-lg">
+                        <i class="fa fa-circle-info me-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image-panel ms-lg-auto">
+                    <div class="hero-image-frame">
+                        <img src="{{ url_for('static', filename='css/image.jpg') }}" alt="Food sharing" class="hero-image">
+                    </div>
+                    <div class="hero-image-caption">
+                        <div class="fw-semibold">Every meal counts</div>
+                        <div class="small text-white-50">Turn surplus food into support for someone who needs it.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
 <!-- Stats -->
 <div class="row g-4 mb-5">
     <div class="col-6 col-md-3">
-        <div class="card card-hover text-center border-0 shadow-sm h-100">
+        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
             <div class="card-body py-4">
                 <i class="fa fa-box-open fa-2x text-warning mb-2"></i>
                 <h2 class="fw-bold mb-0">{{ stats.total }}</h2>
@@ -27,7 +47,7 @@
         </div>
     </div>
     <div class="col-6 col-md-3">
-        <div class="card card-hover text-center border-0 shadow-sm h-100">
+        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
             <div class="card-body py-4">
                 <i class="fa fa-circle-check fa-2x text-success mb-2"></i>
                 <h2 class="fw-bold mb-0">{{ stats.delivered }}</h2>
@@ -36,7 +56,7 @@
         </div>
     </div>
     <div class="col-6 col-md-3">
-        <div class="card card-hover text-center border-0 shadow-sm h-100">
+        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
             <div class="card-body py-4">
                 <i class="fa fa-users fa-2x text-primary mb-2"></i>
                 <h2 class="fw-bold mb-0">{{ stats.active_users }}</h2>
@@ -45,7 +65,7 @@
         </div>
     </div>
     <div class="col-6 col-md-3">
-        <div class="card card-hover text-center border-0 shadow-sm h-100">
+        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
             <div class="card-body py-4">
                 <i class="fa fa-building-ngo fa-2x text-danger mb-2"></i>
                 <h2 class="fw-bold mb-0">{{ stats.ngo_count }}</h2>
@@ -57,10 +77,10 @@
 
 <!-- How it works -->
 <div id="how-it-works" class="mb-5">
-    <h2 class="text-center fw-bold mb-4">How It Works</h2>
+    <h2 class="section-title text-center fw-bold mb-4">How It Works</h2>
     <div class="row g-4">
         <div class="col-md-4 text-center">
-            <div class="card card-hover border-0 shadow-sm h-100 p-4">
+            <div class="card card-hover feature-card border-0 shadow-sm h-100 p-4">
                 <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
                     <i class="fa fa-hand-holding-heart fa-2x text-warning"></i>
                 </div>
@@ -69,7 +89,7 @@
             </div>
         </div>
         <div class="col-md-4 text-center">
-            <div class="card card-hover border-0 shadow-sm h-100 p-4">
+            <div class="card card-hover feature-card border-0 shadow-sm h-100 p-4">
                 <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
                     <i class="fa fa-handshake fa-2x text-primary"></i>
                 </div>
@@ -78,7 +98,7 @@
             </div>
         </div>
         <div class="col-md-4 text-center">
-            <div class="card card-hover border-0 shadow-sm h-100 p-4">
+            <div class="card card-hover feature-card border-0 shadow-sm h-100 p-4">
                 <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
                     <i class="fa fa-truck fa-2x text-success"></i>
                 </div>
@@ -90,10 +110,10 @@
 </div>
 
 <!-- Join as -->
-<h2 class="text-center fw-bold mb-4">Join As</h2>
+<h2 class="section-title text-center fw-bold mb-4">Join As</h2>
 <div class="row g-4 mb-4">
     <div class="col-md-4">
-        <div class="card card-hover border-0 shadow-sm h-100 text-center p-4">
+        <div class="card card-hover feature-card border-0 shadow-sm h-100 text-center p-4">
             <i class="fa fa-person fa-3x text-warning mb-3"></i>
             <h5 class="fw-bold">Donor</h5>
             <p class="text-muted">Have surplus food? List it and help someone in need.</p>
@@ -101,7 +121,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card card-hover border-0 shadow-sm h-100 text-center p-4">
+        <div class="card card-hover feature-card border-0 shadow-sm h-100 text-center p-4">
             <i class="fa fa-people-group fa-3x text-primary mb-3"></i>
             <h5 class="fw-bold">NGO / Volunteer</h5>
             <p class="text-muted">Bridge the gap between donors and those who need food.</p>
@@ -109,7 +129,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card card-hover border-0 shadow-sm h-100 text-center p-4">
+        <div class="card card-hover feature-card border-0 shadow-sm h-100 text-center p-4">
             <i class="fa fa-user-group fa-3x text-success mb-3"></i>
             <h5 class="fw-bold">Receiver</h5>
             <p class="text-muted">Looking for food assistance? Find available donations near you.</p>
