@@ -4,25 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}FoodShare{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body class="site-body">
-<div class="page-glow page-glow-one"></div>
-<div class="page-glow page-glow-two"></div>
 
+<!-- Page Loader -->
+<div id="page-loader">
+    <div class="loader-inner">
+        <div class="loader-icon"></div>
+        <span class="loader-text">FoodShare</span>
+    </div>
+</div>
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
             <span class="brand-mark"><i class="fa fa-bowl-food"></i></span>
             <span>FoodShare</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                 {% if current_user %}
                     {% if current_user.role == 'donor' %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('donor_dashboard') }}"><i class="fa fa-gauge me-1"></i>Dashboard</a></li>
@@ -40,39 +51,157 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('feedback') }}"><i class="fa fa-star me-1"></i>Feedback</a></li>
                     <li class="nav-item ms-lg-2">
                         <a class="btn btn-ghost btn-sm" href="{{ url_for('logout') }}">
-                            <i class="fa fa-right-from-bracket me-1"></i>Logout ({{ current_user.name }})
+                            <i class="fa fa-right-from-bracket me-1"></i>Logout
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-sign-in-alt me-1"></i>Login</a></li>
-                    <li class="nav-item ms-lg-2"><a class="btn btn-accent btn-sm" href="{{ url_for('register') }}"><i class="fa fa-user-plus me-1"></i>Register</a></li>
+                    <li class="nav-item ms-lg-2"><a class="btn btn-accent btn-sm" href="{{ url_for('register') }}"><i class="fa fa-heart me-1"></i>Join the Mission</a></li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
-<main class="container site-main py-4 py-lg-5">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+<!-- Flash messages overlay -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-overlay">
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+
+<main class="site-main">
     {% block content %}{% endblock %}
 </main>
 
-<footer class="site-footer mt-auto">
-    <div class="container text-center">
-        <p class="mb-1 fw-semibold">FoodShare &copy; 2026</p>
-        <p class="mb-0 small text-white-50">Arun Madav, Arunthathi, Arya, Harini - fighting hunger together <i class="fa fa-heart text-danger ms-1"></i></p>
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="row g-4 mb-4">
+            <div class="col-lg-4">
+                <a class="footer-brand" href="{{ url_for('index') }}">
+                    <span class="brand-mark"><i class="fa fa-bowl-food"></i></span>
+                    FoodShare
+                </a>
+                <p class="footer-tagline mt-2">Every meal matters. Every act of giving writes a story of hope for someone who has none.</p>
+            </div>
+            <div class="col-6 col-lg-2 offset-lg-1">
+                <div class="footer-heading">Platform</div>
+                <a class="footer-link" href="{{ url_for('index') }}">Home</a>
+                <a class="footer-link" href="{{ url_for('register') }}">Join Us</a>
+                <a class="footer-link" href="{{ url_for('login') }}">Sign In</a>
+                <a class="footer-link" href="{{ url_for('feedback') }}">Feedback</a>
+            </div>
+            <div class="col-6 col-lg-2">
+                <div class="footer-heading">Roles</div>
+                <a class="footer-link" href="{{ url_for('register') }}">Become a Donor</a>
+                <a class="footer-link" href="{{ url_for('register') }}">Register as NGO</a>
+                <a class="footer-link" href="{{ url_for('register') }}">Find Food</a>
+            </div>
+            <div class="col-lg-3">
+                <div class="footer-heading">A Grim Reality</div>
+                <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.7;">
+                    800 million people sleep hungry tonight. But together, we can change that — one donation at a time.
+                </p>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <p class="footer-copy text-center mb-0">
+            FoodShare &copy; 2026 &mdash; Arun Madav, Arunthathi, Arya, Harini &mdash; fighting hunger together
+            <i class="fa fa-heart ms-1" style="color:var(--warm);"></i>
+        </p>
     </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    // Page loader
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('page-loader');
+        if (loader) {
+            setTimeout(() => loader.classList.add('hidden'), 300);
+        }
+    });
+
+    // AOS init
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 60
+    });
+
+    // GSAP ScrollTrigger registration
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Parallax: hero bg
+    const heroBg = document.getElementById('heroBg');
+    if (heroBg) {
+        gsap.to(heroBg, {
+            yPercent: 28,
+            ease: 'none',
+            scrollTrigger: { trigger: '#heroSection', start: 'top top', end: 'bottom top', scrub: true }
+        });
+    }
+
+    // Parallax: quote bg
+    const quoteBg = document.getElementById('quoteBg');
+    if (quoteBg) {
+        gsap.to(quoteBg, {
+            yPercent: 22,
+            ease: 'none',
+            scrollTrigger: { trigger: '#quoteSection', start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+    }
+
+    // Parallax: CTA bg
+    const ctaBg = document.getElementById('ctaBg');
+    if (ctaBg) {
+        gsap.to(ctaBg, {
+            yPercent: 20,
+            ease: 'none',
+            scrollTrigger: { trigger: '#ctaSection', start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+    }
+
+    // Animated counters
+    function animateCounter(el) {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const duration = 1800;
+        const start = performance.now();
+        function step(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target).toLocaleString();
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString();
+        }
+        requestAnimationFrame(step);
+    }
+
+    const counters = document.querySelectorAll('[data-target]');
+    if (counters.length) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCounter(e.target);
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => io.observe(c));
+    }
+</script>
 </body>
 </html>

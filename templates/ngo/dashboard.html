@@ -1,43 +1,55 @@
 {% extends 'base.html' %}
-{% block title %}NGO Dashboard - FoodShare{% endblock %}
+{% block title %}NGO Dashboard — FoodShare{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold mb-0"><i class="fa fa-building-ngo me-2 text-primary"></i>Available Donations</h3>
-    <a href="{{ url_for('ngo_requests') }}" class="btn btn-outline-primary"><i class="fa fa-list me-1"></i>My Requests</a>
-</div>
+<div class="container dashboard-page">
+    <div class="page-header">
+        <div>
+            <h3 class="page-header-title">
+                <i class="fa fa-building-ngo me-2" style="color:var(--accent-l);"></i>Available Donations
+            </h3>
+            <p class="page-header-sub">Browse and claim donations to deliver to those in need.</p>
+        </div>
+        <a href="{{ url_for('ngo_requests') }}" class="btn btn-outline-primary">
+            <i class="fa fa-list me-2"></i>My Claims
+        </a>
+    </div>
 
-{% if donations %}
-<div class="row g-3">
-    {% for d in donations %}
-    <div class="col-md-6 col-lg-4">
-        <div class="card card-hover border-0 shadow-sm h-100">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <span class="fw-semibold">{{ d.food_type }}</span>
-                <span class="badge badge-pending">Pending</span>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled mb-3">
-                    <li class="mb-1"><i class="fa fa-boxes-stacked text-muted me-2"></i>{{ d.quantity }}</li>
-                    <li class="mb-1"><i class="fa fa-location-dot text-muted me-2"></i>{{ d.location }}</li>
-                    <li class="mb-1"><i class="fa fa-clock text-muted me-2"></i>Expires: {{ d.expiry_time.strftime('%d %b %Y %H:%M') if d.expiry_time else '-' }}</li>
-                    <li><i class="fa fa-user text-muted me-2"></i>Donor: {{ d.donor_name }}</li>
-                </ul>
-                {% if d.description %}
-                <p class="text-muted small mb-3">{{ d.description }}</p>
-                {% endif %}
-            </div>
-            <div class="card-footer bg-white border-0">
-                <form method="post" action="{{ url_for('ngo_claim', donation_id=d.donation_id) }}" onsubmit="return confirm('Claim this donation?')">
-                    <button type="submit" class="btn btn-primary w-100"><i class="fa fa-hand-holding me-2"></i>Claim Donation</button>
-                </form>
+    {% if donations %}
+    <div class="row g-3">
+        {% for d in donations %}
+        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+            <div class="card card-hover h-100 border-0">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold" style="color:var(--text);">{{ d.food_type }}</span>
+                    <span class="badge badge-pending">Available</span>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-3" style="color:var(--text-dim);font-size:.9rem;">
+                        <li class="mb-2"><i class="fa fa-boxes-stacked me-2" style="color:var(--text-muted);width:1rem;"></i>{{ d.quantity }}</li>
+                        <li class="mb-2"><i class="fa fa-location-dot me-2" style="color:var(--text-muted);width:1rem;"></i>{{ d.location }}</li>
+                        <li class="mb-2"><i class="fa fa-clock me-2" style="color:var(--text-muted);width:1rem;"></i>Expires: {{ d.expiry_time.strftime('%d %b %Y %H:%M') if d.expiry_time else '—' }}</li>
+                        <li><i class="fa fa-user me-2" style="color:var(--text-muted);width:1rem;"></i>Donor: {{ d.donor_name }}</li>
+                    </ul>
+                    {% if d.description %}
+                    <p class="mb-0" style="font-size:.85rem;color:var(--text-muted);">{{ d.description }}</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer border-0 pt-0">
+                    <form method="post" action="{{ url_for('ngo_claim', donation_id=d.donation_id) }}" onsubmit="return confirm('Claim this donation for your NGO?')">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fa fa-hand-holding me-2"></i>Claim This Donation
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    {% else %}
+    <div class="card border-0 p-5 text-center">
+        <i class="fa fa-box-open fa-3x mb-3" style="color:var(--text-muted);"></i>
+        <p style="color:var(--text-dim);" class="mb-0">No available donations at the moment. Check back soon.</p>
+    </div>
+    {% endif %}
 </div>
-{% else %}
-<div class="alert alert-info">
-    <i class="fa fa-circle-info me-2"></i>No available donations at the moment. Check back later!
-</div>
-{% endif %}
 {% endblock %}

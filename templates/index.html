@@ -1,140 +1,307 @@
 {% extends 'base.html' %}
-{% block title %}FoodShare - Fighting Hunger Together{% endblock %}
+{% block title %}FoodShare — Because No One Should Sleep Hungry{% endblock %}
 {% block content %}
-<!-- Hero -->
-<section class="hero-section mb-5">
-    <div class="hero-orb hero-orb-one"></div>
-    <div class="hero-orb hero-orb-two"></div>
-    <div class="container hero-content py-5">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6 text-center text-lg-start text-white">
-                <div class="hero-pill mb-3">Food rescue made simple</div>
-                <h1 class="display-3 fw-bold mb-3">Fighting Hunger Together</h1>
-                <p class="lead mb-4 hero-copy">Connect food donors with NGOs and receivers. Reduce waste. Feed communities.</p>
-                <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
-                    <a href="{{ url_for('register') }}" class="btn btn-light btn-lg fw-semibold">
-                        <i class="fa fa-rocket me-2"></i>Get Started
-                    </a>
-                    <a href="#how-it-works" class="btn btn-outline-light btn-lg">
-                        <i class="fa fa-circle-info me-2"></i>Learn More
-                    </a>
+
+<!-- ══════════════════════════════════════════════
+     HERO — FULL-SCREEN PARALLAX
+══════════════════════════════════════════════ -->
+<section class="hero-fullscreen" id="heroSection">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">
+            <i class="fa fa-circle me-2" style="font-size:0.5em;vertical-align:middle;color:var(--warm);animation:pulse 2s ease infinite;"></i>
+            Right now, this moment
+        </div>
+        <h1 class="hero-title">
+            <span class="hl">854 million</span><br>
+            people are hungry.
+        </h1>
+        <p class="hero-subtitle">
+            Behind every statistic is a child who went to sleep crying,
+            a parent who sacrificed their meal so their child could eat.
+            You have the power to change that.
+        </p>
+        <div class="hero-cta">
+            <a href="{{ url_for('register') }}" class="btn-hero-primary">
+                <i class="fa fa-heart"></i> Start Donating
+            </a>
+            <a href="#impact" class="btn-hero-ghost">
+                <i class="fa fa-arrow-down"></i> See the Impact
+            </a>
+        </div>
+    </div>
+    <div class="hero-scroll-hint">
+        <span>Scroll</span>
+        <i class="fa fa-chevron-down"></i>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     TICKER — SCROLLING HUNGER FACTS
+══════════════════════════════════════════════ -->
+<div class="ticker-section">
+    <div class="ticker-track" aria-label="Hunger facts">
+        <span class="ticker-item">1 in 9 people worldwide are undernourished</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">3.1 million children die from hunger each year</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">A child dies of hunger every 10 seconds</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">1/3 of all food produced globally is wasted</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">800 million people go to bed hungry tonight</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">Surplus food from events could feed thousands daily</span>
+        <span class="ticker-dot">•</span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item">1 in 9 people worldwide are undernourished</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">3.1 million children die from hunger each year</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">A child dies of hunger every 10 seconds</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">1/3 of all food produced globally is wasted</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">800 million people go to bed hungry tonight</span>
+        <span class="ticker-dot">•</span>
+        <span class="ticker-item">Surplus food from events could feed thousands daily</span>
+        <span class="ticker-dot">•</span>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     IMPACT STATS — ANIMATED COUNTERS
+══════════════════════════════════════════════ -->
+<section class="stats-section section" id="impact">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-eyebrow">Our Collective Impact</span>
+            <h2 class="section-title">Every Number is a <em>Life Changed</em></h2>
+            <p class="section-desc mx-auto">These aren't just statistics. Each meal delivered is a family that slept without hunger, a child who woke up with energy to dream.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto" style="background:rgba(196,122,85,.12);color:var(--warm-l);">
+                        <i class="fa fa-box-open"></i>
+                    </div>
+                    <span class="stat-num" data-target="{{ stats.total }}">0</span>
+                    <span class="stat-label">Total Donations</span>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="hero-image-panel ms-lg-auto">
-                    <div class="hero-image-frame">
-                        <img src="{{ url_for('static', filename='css/image.jpg') }}" alt="Food sharing" class="hero-image">
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto" style="background:rgba(61,138,104,.12);color:#5eb88a;">
+                        <i class="fa fa-circle-check"></i>
                     </div>
-                    <div class="hero-image-caption">
-                        <div class="fw-semibold">Every meal counts</div>
-                        <div class="small text-white-50">Turn surplus food into support for someone who needs it.</div>
+                    <span class="stat-num" data-target="{{ stats.delivered }}">0</span>
+                    <span class="stat-label">Meals Delivered</span>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto" style="background:rgba(74,138,181,.12);color:var(--accent-l);">
+                        <i class="fa fa-users"></i>
                     </div>
+                    <span class="stat-num" data-target="{{ stats.active_users }}">0</span>
+                    <span class="stat-label">Active Members</span>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto" style="background:rgba(184,64,64,.12);color:#e07070;">
+                        <i class="fa fa-building-ngo"></i>
+                    </div>
+                    <span class="stat-num" data-target="{{ stats.ngo_count }}">0</span>
+                    <span class="stat-label">NGO Partners</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Stats -->
-<div class="row g-4 mb-5">
-    <div class="col-6 col-md-3">
-        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
-            <div class="card-body py-4">
-                <i class="fa fa-box-open fa-2x text-warning mb-2"></i>
-                <h2 class="fw-bold mb-0">{{ stats.total }}</h2>
-                <p class="text-muted small mb-0">Total Donations</p>
-            </div>
-        </div>
+<!-- ══════════════════════════════════════════════
+     PARALLAX QUOTE SECTION
+══════════════════════════════════════════════ -->
+<section class="parallax-quote-section" id="quoteSection">
+    <div class="parallax-quote-bg" id="quoteBg"></div>
+    <div class="parallax-quote-overlay"></div>
+    <div class="parallax-quote-content" data-aos="fade-up">
+        <blockquote class="hero-quote">
+            The world produces enough food to feed everyone. Yet 811 million people go hungry.
+        </blockquote>
+        <cite class="quote-cite">— World Food Programme, 2023</cite>
     </div>
-    <div class="col-6 col-md-3">
-        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
-            <div class="card-body py-4">
-                <i class="fa fa-circle-check fa-2x text-success mb-2"></i>
-                <h2 class="fw-bold mb-0">{{ stats.delivered }}</h2>
-                <p class="text-muted small mb-0">Delivered</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
-            <div class="card-body py-4">
-                <i class="fa fa-users fa-2x text-primary mb-2"></i>
-                <h2 class="fw-bold mb-0">{{ stats.active_users }}</h2>
-                <p class="text-muted small mb-0">Active Users</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card card-hover stat-card text-center border-0 shadow-sm h-100">
-            <div class="card-body py-4">
-                <i class="fa fa-building-ngo fa-2x text-danger mb-2"></i>
-                <h2 class="fw-bold mb-0">{{ stats.ngo_count }}</h2>
-                <p class="text-muted small mb-0">NGO Partners</p>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
-<!-- How it works -->
-<div id="how-it-works" class="mb-5">
-    <h2 class="section-title text-center fw-bold mb-4">How It Works</h2>
-    <div class="row g-4">
-        <div class="col-md-4 text-center">
-            <div class="card card-hover feature-card border-0 shadow-sm h-100 p-4">
-                <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
-                    <i class="fa fa-hand-holding-heart fa-2x text-warning"></i>
-                </div>
-                <h5 class="fw-bold">1. Donate</h5>
-                <p class="text-muted">Donors list surplus food with details like type, quantity, location and expiry time.</p>
-            </div>
-        </div>
-        <div class="col-md-4 text-center">
-            <div class="card card-hover feature-card border-0 shadow-sm h-100 p-4">
-                <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
-                    <i class="fa fa-handshake fa-2x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">2. Connect</h5>
-                <p class="text-muted">NGOs and receivers browse available donations and claim what they need.</p>
-            </div>
-        </div>
-        <div class="col-md-4 text-center">
-            <div class="card card-hover feature-card border-0 shadow-sm h-100 p-4">
-                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width:70px;height:70px;">
-                    <i class="fa fa-truck fa-2x text-success"></i>
-                </div>
-                <h5 class="fw-bold">3. Deliver</h5>
-                <p class="text-muted">NGOs coordinate pickup and delivery, updating status as food reaches recipients.</p>
-            </div>
+<!-- ══════════════════════════════════════════════
+     FEATURE IMAGE SECTION — EMOTIONAL STORY
+══════════════════════════════════════════════ -->
+<section class="feature-image-section">
+    <div class="feature-image-panel">
+        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=75" alt="Food being prepared for donation" loading="lazy">
+        <div class="feature-image-overlay"></div>
+        <div class="feature-image-caption">
+            <small style="font-size:0.8rem;color:rgba(255,255,255,.6);letter-spacing:.05em;text-transform:uppercase;">The world wastes enough food to end hunger</small>
         </div>
     </div>
-</div>
+    <div class="feature-text-panel">
+        <div data-aos="fade-left">
+            <span class="section-eyebrow">The Silent Crisis</span>
+            <h2 class="section-title">Food Wasted Could Feed <em>the World</em></h2>
+            <p class="section-desc mb-4">
+                While millions go to sleep with hollow stomachs, tonnes of perfectly good food is thrown away every day — from restaurants, events, and households. The gap between surplus and starvation is just a lack of connection.
+            </p>
+            <p class="section-desc">
+                FoodShare bridges that gap. We connect those who have with those who need, so that every meal finds its purpose — and every person finds their dignity.
+            </p>
+        </div>
+    </div>
+</section>
 
-<!-- Join as -->
-<h2 class="section-title text-center fw-bold mb-4">Join As</h2>
-<div class="row g-4 mb-4">
-    <div class="col-md-4">
-        <div class="card card-hover feature-card border-0 shadow-sm h-100 text-center p-4">
-            <i class="fa fa-person fa-3x text-warning mb-3"></i>
-            <h5 class="fw-bold">Donor</h5>
-            <p class="text-muted">Have surplus food? List it and help someone in need.</p>
-            <a href="{{ url_for('register') }}" class="btn btn-warning mt-auto">Register as Donor</a>
+<!-- Second feature — reverse -->
+<section class="feature-image-section">
+    <div class="feature-text-panel" style="background:var(--bg-2);">
+        <div data-aos="fade-right">
+            <span class="section-eyebrow">Beyond Numbers</span>
+            <h2 class="section-title">A Child's <em>Empty Plate</em> Tells the Story</h2>
+            <p class="section-desc mb-4">
+                3.1 million children under five die each year from malnutrition — that's one child every 10 seconds. Each one had a name. Each one had a family watching helplessly.
+            </p>
+            <p class="section-desc">
+                When you donate through FoodShare, you don't just share food. You share a lifeline, a ray of hope in the darkest of nights.
+            </p>
+            <a href="{{ url_for('register') }}" class="btn-hero-primary d-inline-flex mt-4">
+                <i class="fa fa-heart me-2"></i> Be That Change
+            </a>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-hover feature-card border-0 shadow-sm h-100 text-center p-4">
-            <i class="fa fa-people-group fa-3x text-primary mb-3"></i>
-            <h5 class="fw-bold">NGO / Volunteer</h5>
-            <p class="text-muted">Bridge the gap between donors and those who need food.</p>
-            <a href="{{ url_for('register') }}" class="btn btn-primary mt-auto">Register as NGO</a>
+    <div class="feature-image-panel">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&q=75" alt="Children in need" loading="lazy">
+        <div class="feature-image-overlay"></div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════════════ -->
+<section class="section" id="how-it-works" style="background:var(--bg-1);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-eyebrow">The Process</span>
+            <h2 class="section-title">How <em>You</em> Can Help</h2>
+            <p class="section-desc mx-auto">Three simple steps stand between surplus food and a family in need. Your action today becomes someone's meal tomorrow.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="step-card h-100">
+                    <span class="step-num">01</span>
+                    <div class="step-icon" style="background:rgba(196,122,85,.12);color:var(--warm-l);">
+                        <i class="fa fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="step-title">List Your Donation</div>
+                    <p class="step-desc">Have surplus food from an event, your kitchen, or your business? List it in seconds — food type, quantity, location, and expiry. No food is too little.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+                <div class="step-card h-100">
+                    <span class="step-num">02</span>
+                    <div class="step-icon" style="background:rgba(74,138,181,.12);color:var(--accent-l);">
+                        <i class="fa fa-handshake"></i>
+                    </div>
+                    <div class="step-title">NGOs Connect</div>
+                    <p class="step-desc">Trusted NGOs and volunteers browse available donations and claim what they need — matching food to the communities that need it most, with speed and care.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-card h-100">
+                    <span class="step-num">03</span>
+                    <div class="step-icon" style="background:rgba(61,138,104,.12);color:#5eb88a;">
+                        <i class="fa fa-truck"></i>
+                    </div>
+                    <div class="step-title">Food Reaches Families</div>
+                    <p class="step-desc">NGOs coordinate pickup and delivery, updating status in real time. You'll know when your donation becomes someone's meal — a moment worth everything.</p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-hover feature-card border-0 shadow-sm h-100 text-center p-4">
-            <i class="fa fa-user-group fa-3x text-success mb-3"></i>
-            <h5 class="fw-bold">Receiver</h5>
-            <p class="text-muted">Looking for food assistance? Find available donations near you.</p>
-            <a href="{{ url_for('register') }}" class="btn btn-success mt-auto">Register as Receiver</a>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     JOIN SECTION
+══════════════════════════════════════════════ -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-eyebrow">Take Your Place</span>
+            <h2 class="section-title">Join the <em>Movement</em></h2>
+            <p class="section-desc mx-auto">Hunger is not inevitable. It is a problem we can solve — together. Choose your role and be part of the solution today.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="join-card h-100">
+                    <div class="join-card-icon" style="background:rgba(196,122,85,.12);color:var(--warm-l);">
+                        <i class="fa fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="join-card-title">I Want to Donate</div>
+                    <p class="join-card-desc">You have surplus food — don't let it go to waste when it can save a life. Restaurants, homes, events — every donation matters and reaches someone in need.</p>
+                    <a href="{{ url_for('register') }}" class="btn-hero-primary w-100 justify-content-center">
+                        <i class="fa fa-heart me-2"></i> Register as Donor
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+                <div class="join-card h-100">
+                    <div class="join-card-icon" style="background:rgba(74,138,181,.12);color:var(--accent-l);">
+                        <i class="fa fa-people-group"></i>
+                    </div>
+                    <div class="join-card-title">I'm an NGO / Volunteer</div>
+                    <p class="join-card-desc">You're the bridge between generosity and need. Join FoodShare to access available donations, coordinate pickups, and bring hope to the communities you serve.</p>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary w-100 fw-semibold">
+                        <i class="fa fa-building-ngo me-2"></i> Register as NGO
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="join-card h-100">
+                    <div class="join-card-icon" style="background:rgba(61,138,104,.12);color:#5eb88a;">
+                        <i class="fa fa-user-group"></i>
+                    </div>
+                    <div class="join-card-title">I Need Food</div>
+                    <p class="join-card-desc">There is no shame in asking for help. Browse available donations near you and request the food you need. You deserve nourishment, and we're here to help you find it.</p>
+                    <a href="{{ url_for('register') }}" class="btn btn-success w-100 fw-semibold">
+                        <i class="fa fa-hand-holding me-2"></i> Find Food Near Me
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CTA PARALLAX SECTION
+══════════════════════════════════════════════ -->
+<section class="cta-parallax-section" id="ctaSection">
+    <div class="cta-parallax-bg" id="ctaBg"></div>
+    <div class="cta-parallax-overlay"></div>
+    <div class="cta-content" data-aos="fade-up">
+        <span class="section-eyebrow" style="color:var(--warm-l);">The Time is Now</span>
+        <h2 class="section-title" style="color:#fff;font-size:clamp(2.2rem,5vw,3.5rem);">
+            A meal you spare today is a <em>life</em> saved tonight.
+        </h2>
+        <p style="font-size:1.1rem;color:rgba(255,255,255,.7);margin-bottom:2.5rem;line-height:1.8;max-width:560px;margin-left:auto;margin-right:auto;">
+            Join thousands of donors, NGOs, and receivers who are rewriting the story of hunger in their communities. It starts with you.
+        </p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{{ url_for('register') }}" class="btn-hero-primary">
+                <i class="fa fa-rocket me-2"></i> Get Started — It's Free
+            </a>
+            <a href="{{ url_for('login') }}" class="btn-hero-ghost">
+                <i class="fa fa-sign-in-alt me-2"></i> Sign In
+            </a>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

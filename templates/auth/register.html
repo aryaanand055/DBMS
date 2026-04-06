@@ -1,52 +1,50 @@
 {% extends 'base.html' %}
-{% block title %}Register - FoodShare{% endblock %}
+{% block title %}Join FoodShare — Register{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-7 col-lg-6">
-        <div class="register-surface mt-4">
-            <div class="register-background"></div>
-            <div class="register-orb register-orb-one"></div>
-            <div class="register-orb register-orb-two"></div>
-            <div class="card auth-card register-card shadow border-0">
-                <div class="card-body p-4 p-lg-5">
-                    <div class="text-center mb-4">
-                        <div class="auth-icon mb-3"><i class="fa fa-user-plus"></i></div>
-                        <h4 class="fw-bold mb-2 text-white">Create your account</h4>
-                        <p class="mb-0 small register-intro">Pick a role and start sharing or requesting food.</p>
-                    </div>
-                    <form method="post">
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-white">Full Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-white">Email <span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-white">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-white">Role <span class="text-danger">*</span></label>
-                            <select name="role" class="form-select" required>
-                                <option value="">Select a role...</option>
-                                <option value="donor">Donor</option>
-                                <option value="ngo">NGO / Volunteer</option>
-                                <option value="receiver">Receiver</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold text-white">Phone (optional)</label>
-                            <input type="tel" name="phone" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-accent w-100 fw-semibold">Register</button>
-                    </form>
-                    <hr class="border-light border-opacity-25">
-                    <p class="text-center mb-0 small text-white-50">Already have an account? <a class="text-white fw-semibold" href="{{ url_for('login') }}">Login here</a></p>
-                </div>
-            </div>
+<div class="auth-page" style="align-items:flex-start;padding-top:3rem;padding-bottom:3rem;">
+    <div class="auth-bg"></div>
+    <div class="auth-overlay"></div>
+    <div class="auth-card p-4 p-lg-5" style="max-width:520px;">
+        <div class="text-center mb-4">
+            <div class="auth-icon mb-3"><i class="fa fa-heart"></i></div>
+            <h4 class="auth-title mb-1">Join the Mission</h4>
+            <p class="auth-subtitle mb-0">Every account created brings us one step closer to a hunger-free world.</p>
         </div>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                <input type="text" name="name" class="form-control" placeholder="Your full name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" name="email" class="form-control" placeholder="your@email.com" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password <span class="text-danger">*</span></label>
+                <input type="password" name="password" class="form-control" placeholder="Choose a strong password" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Your Role <span class="text-danger">*</span></label>
+                <select name="role" class="form-select" required>
+                    <option value="">Select how you want to help...</option>
+                    <option value="donor">Donor — I have food to share</option>
+                    <option value="ngo">NGO / Volunteer — I bridge the gap</option>
+                    <option value="receiver">Receiver — I need food assistance</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Phone (optional)</label>
+                <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXX XXXXX">
+            </div>
+            <button type="submit" class="btn btn-accent w-100 fw-semibold py-2">
+                <i class="fa fa-user-plus me-2"></i>Create Account
+            </button>
+        </form>
+        <hr class="auth-divider">
+        <p class="text-center mb-0 small" style="color:var(--text-dim);">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Sign in here</a>
+        </p>
     </div>
 </div>
 {% endblock %}
