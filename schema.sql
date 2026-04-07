@@ -34,11 +34,12 @@ CREATE TABLE Food_Donations (
 );
 
 CREATE TABLE Requests (
-    request_id     INT NOT NULL AUTO_INCREMENT,
-    donation_id    INT NOT NULL,
-    ngo_id         INT NOT NULL,
-    request_status ENUM('pending','accepted','rejected') NOT NULL DEFAULT 'pending',
-    created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    request_id       INT NOT NULL AUTO_INCREMENT,
+    donation_id      INT NOT NULL,
+    ngo_id           INT NOT NULL,
+    delivery_address VARCHAR(255) DEFAULT NULL,
+    request_status   ENUM('pending','accepted','rejected') NOT NULL DEFAULT 'pending',
+    created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (request_id),
     CONSTRAINT fk_request_donation FOREIGN KEY (donation_id) REFERENCES Food_Donations(donation_id) ON DELETE CASCADE,
     CONSTRAINT fk_request_ngo FOREIGN KEY (ngo_id) REFERENCES Users(user_id) ON DELETE CASCADE

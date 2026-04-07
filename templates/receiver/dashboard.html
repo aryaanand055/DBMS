@@ -32,11 +32,44 @@
                         <td>{{ d.donor_name }}</td>
                         <td>{{ d.expiry_time.strftime('%d %b %Y %H:%M') if d.expiry_time else '—' }}</td>
                         <td>
-                            <form method="post" action="{{ url_for('receiver_request', donation_id=d.donation_id) }}" onsubmit="return confirm('Request this donation?')">
-                                <button type="submit" class="btn btn-sm btn-success">
-                                    <i class="fa fa-hand-holding me-1"></i>Request
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-sm btn-success"
+                                data-bs-toggle="modal"
+                                data-bs-target="#requestModal{{ d.donation_id }}">
+                                <i class="fa fa-hand-holding me-1"></i>Request
+                            </button>
+
+                            <!-- Request Modal -->
+                            <div class="modal fade" id="requestModal{{ d.donation_id }}" tabindex="-1" aria-labelledby="requestModalLabel{{ d.donation_id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="post" action="{{ url_for('receiver_request', donation_id=d.donation_id) }}">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="requestModalLabel{{ d.donation_id }}">
+                                                    Request: {{ d.food_type }}
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label for="delivery_address_{{ d.donation_id }}" class="form-label fw-semibold">
+                                                    Delivery Address <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="text" class="form-control"
+                                                    id="delivery_address_{{ d.donation_id }}"
+                                                    name="delivery_address"
+                                                    placeholder="Enter your full delivery address"
+                                                    required>
+                                                <div class="form-text">The NGO will use this address to deliver the food to you.</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="fa fa-hand-holding me-1"></i>Confirm Request
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}
@@ -62,7 +95,7 @@
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
                     <thead>
-                        <tr><th>Food Type</th><th>Quantity</th><th>Location</th><th>Donor</th><th>Request Status</th><th>Delivery</th></tr>
+                        <tr><th>Food Type</th><th>Quantity</th><th>Pickup Location</th><th>Donor</th><th>Delivery Address</th><th>Request Status</th><th>Delivery</th></tr>
                     </thead>
                     <tbody>
                     {% for r in my_requests %}
@@ -71,6 +104,7 @@
                         <td>{{ r.quantity }}</td>
                         <td>{{ r.location }}</td>
                         <td>{{ r.donor_name }}</td>
+                        <td>{{ r.delivery_address or '—' }}</td>
                         <td><span class="badge badge-{{ r.request_status }}">{{ r.request_status.title() }}</span></td>
                         <td>
                             {% if r.delivery_status %}

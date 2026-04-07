@@ -21,7 +21,7 @@
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
-                            <th>Food Type</th><th>Qty</th><th>Location</th><th>Donor</th><th>Expiry</th><th>Donation Status</th><th>Delivery</th><th>Update</th>
+                            <th>Food Type</th><th>Qty</th><th>Pickup Location</th><th>Delivery Address</th><th>Donor</th><th>Expiry</th><th>Donation Status</th><th>Delivery</th><th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +30,7 @@
                         <td class="fw-semibold">{{ r.food_type }}</td>
                         <td>{{ r.quantity }}</td>
                         <td>{{ r.location }}</td>
+                        <td>{{ r.delivery_address or '—' }}</td>
                         <td>{{ r.donor_name }}</td>
                         <td>{{ r.expiry_time.strftime('%d %b %Y') if r.expiry_time else '—' }}</td>
                         <td><span class="badge badge-{{ r.donation_status }}">{{ r.donation_status.replace('_',' ').title() }}</span></td>
