@@ -531,7 +531,16 @@ cite.quote-cite {
 .card-hover:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--line-2) !important; }
 
 /* ── TABLES ── */
-.table { color: var(--text) !important; border-color: var(--line) !important; background: transparent !important; }
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--line);
+    --bs-table-hover-bg: rgba(255,255,255,.03);
+    --bs-table-hover-color: var(--text);
+    --bs-table-striped-bg: rgba(255,255,255,.02);
+    --bs-table-striped-color: var(--text);
+    color: var(--text) !important; border-color: var(--line) !important; background: transparent !important;
+}
 .table th {
     color: var(--text-muted) !important;
     font-size: 0.73rem; text-transform: uppercase;
@@ -560,6 +569,7 @@ cite.quote-cite {
     letter-spacing: 0.03em;
 }
 .badge-pending   { background: rgba(196,152,69,.2)  !important; color: #d4a84a !important; border: 1px solid rgba(196,152,69,.3); }
+.badge-requested { background: rgba(140,60,200,.2)  !important; color: #c080e0 !important; border: 1px solid rgba(140,60,200,.3); }
 .badge-accepted  { background: rgba(58,120,176,.2)  !important; color: #5aaae0 !important; border: 1px solid rgba(58,120,176,.3); }
 .badge-in_transit{ background: rgba(100,100,220,.2) !important; color: #9999ff !important; border: 1px solid rgba(100,100,220,.3); }
 .badge-delivered { background: rgba(61,138,104,.2)  !important; color: #5eb88a !important; border: 1px solid rgba(61,138,104,.3); }
@@ -570,6 +580,20 @@ cite.quote-cite {
 .bg-primary  { background: rgba(74,138,181,.2)  !important; color: #6aaad5 !important; border: 1px solid rgba(74,138,181,.3) !important; }
 .bg-secondary{ background: rgba(255,255,255,.07) !important; color: var(--text-dim) !important; border: 1px solid var(--line) !important; }
 .bg-info     { background: rgba(58,120,176,.2)  !important; color: #5aaae0 !important; border: 1px solid rgba(58,120,176,.3) !important; }
+
+/* ── LIST GROUP ── */
+.list-group-item {
+    background: var(--bg-card) !important;
+    border-color: var(--line) !important;
+    color: var(--text-dim) !important;
+}
+.list-group-item-action:hover,
+.list-group-item-action:focus {
+    background: var(--bg-card-h) !important;
+    color: var(--text) !important;
+}
+.list-group-flush > .list-group-item { border-width: 0 0 1px; }
+.list-group-flush > .list-group-item:last-child { border-bottom-width: 0; }
 
 /* ── FORMS ── */
 .form-control,

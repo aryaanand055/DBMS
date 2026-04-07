@@ -21,7 +21,9 @@
             <div class="card card-hover h-100 border-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="fw-semibold" style="color:var(--text);">{{ d.food_type }}</span>
-                    <span class="badge badge-pending">Available</span>
+                    <span class="badge {% if d.status == 'requested' %}badge-requested{% else %}badge-pending{% endif %}">
+                        {% if d.status == 'requested' %}Requested{% else %}Available{% endif %}
+                    </span>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mb-3" style="color:var(--text-dim);font-size:.9rem;">

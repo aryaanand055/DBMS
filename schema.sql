@@ -26,7 +26,7 @@ CREATE TABLE Food_Donations (
     quantity     VARCHAR(100) NOT NULL,
     location     VARCHAR(255) NOT NULL,
     expiry_time  DATETIME NOT NULL,
-    status       ENUM('pending','accepted','in_transit','delivered','cancelled') NOT NULL DEFAULT 'pending',
+    status       ENUM('pending','requested','accepted','in_transit','delivered','cancelled') NOT NULL DEFAULT 'pending',
     description  TEXT DEFAULT NULL,
     created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (donation_id),
